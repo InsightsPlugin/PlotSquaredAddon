@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+}
+
+String packagePath = 'net.frankheijden.insights.addons.plotsquared'
+group = packagePath
+version = '1.0.0'
+description = 'PlotSquaredAddon'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://papermc.io/repo/repository/maven-public/' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.enginehub.org/repo/' }
+    maven { url 'https://mvn.intellectualsites.com/content/groups/public/' }
+}
+
+dependencies {
+    compileOnly 'com.github.FrankHeijden:Insights:1a81653312'
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT'
+    compileOnly 'com.plotsquared:PlotSquared-Core:5.13.3'
+    compileOnly 'com.plotsquared:PlotSquared-Bukkit:5.13.3'
+    compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.0-SNAPSHOT'
+}
