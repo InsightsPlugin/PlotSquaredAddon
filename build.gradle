@@ -7,7 +7,7 @@ String packagePath = 'dev.frankheijden.insights.addons.plotsquared'
 group = packagePath
 version = '2.0.1'
 description = 'PlotSquaredAddon'
-sourceCompatibility = '1.8'
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_16
 
 repositories {
     mavenCentral()
@@ -18,10 +18,10 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'com.github.FrankHeijden:Insights:feature~addons-SNAPSHOT'
-    compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
-    compileOnly 'com.plotsquared:PlotSquared-Core:5.13.3'
-    compileOnly 'com.plotsquared:PlotSquared-Bukkit:5.13.3'
+    compileOnly 'com.github.InsightsPlugin:Insights:6.5.5'
+    compileOnly 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'
+    compileOnly 'com.plotsquared:PlotSquared-Core:6.0.5-SNAPSHOT'
+    compileOnly 'com.plotsquared:PlotSquared-Bukkit:6.0.5-SNAPSHOT'
     compileOnly 'com.sk89q.worldedit:worldedit-bukkit:7.2.2'
 }
 

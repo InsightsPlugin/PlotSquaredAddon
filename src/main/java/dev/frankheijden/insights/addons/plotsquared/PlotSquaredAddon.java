@@ -70,7 +70,7 @@ public class PlotSquaredAddon implements InsightsAddon {
 
     @Override
     public Optional<Region> getRegion(org.bukkit.Location location) {
-        return adapt(new Location(
+        return adapt(Location.at(
                 location.getWorld().getName(),
                 location.getBlockX(),
                 location.getBlockY(),
