@@ -1,9 +1,18 @@
 package dev.frankheijden.insights.addons.plotsquared;
 
+import com.google.common.eventbus.Subscribe;
+import com.plotsquared.core.PlotAPI;
+import com.plotsquared.core.events.PlayerAutoPlotEvent;
+import com.plotsquared.core.events.PlayerClaimPlotEvent;
+import com.plotsquared.core.events.PlotAutoMergeEvent;
+import com.plotsquared.core.events.PlotClearEvent;
+import com.plotsquared.core.events.PlotDeleteEvent;
+import com.plotsquared.core.events.PlotMergeEvent;
 import com.plotsquared.core.location.Location;
 import com.plotsquared.core.plot.Plot;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
+import dev.frankheijden.insights.api.InsightsPlugin;
 import dev.frankheijden.insights.api.addons.InsightsAddon;
 import dev.frankheijden.insights.api.addons.Region;
 import dev.frankheijden.insights.api.objects.chunk.ChunkPart;
@@ -17,7 +26,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class PlotSquaredAddon implements InsightsAddon {
-    
+
+    private final PlotAPI plotAPI;
+
+    public PlotSquaredAddon() {
+        this.plotAPI = new PlotAPI();
+        this.plotAPI.registerListener(this);
+    }
+
     public String getId(Collection<? extends Plot> plots) {
         return getPluginName() + "@" + getRawId(plots);
     }
@@ -76,6 +92,47 @@ public class PlotSquaredAddon implements InsightsAddon {
                 location.getBlockY(),
                 location.getBlockZ()
         ).getOwnedPlotAbs(), location.getWorld());
+    }
+
+    private void clearPlotCache(Plot plot) {
+        var key = getId(plot.getConnectedPlots());
+        InsightsPlugin.getInstance().getAddonStorage().remove(key);
+    }
+
+    @Subscribe
+    public void onAutoPlot(PlayerAutoPlotEvent event) {
+        clearPlotCache(event.getPlot());
+    }
+
+    @Subscribe
+    public void onClaimPlot(PlayerClaimPlotEvent event) {
+        clearPlotCache(event.getPlot());
+    }
+
+    @Subscribe
+    public void onPlotAutoMerge(PlotAutoMergeEvent event) {
+        clearPlotCache(event.getPlot());
+    }
+
+    @Subscribe
+    public void onPlotClear(PlotClearEvent event) {
+        clearPlotCache(event.getPlot());
+    }
+
+    @Subscribe
+    public void onPlotDelete(PlotDeleteEvent event) {
+        clearPlotCache(event.getPlot());
+    }
+
+    @Subscribe
+    public void onPlotMerge(PlotMergeEvent event) {
+        var plot = event.getPlot();
+        clearPlotCache(plot);
+
+        var plotRelative = plot.getRelative(event.getDir());
+        if (plotRelative != null) {
+            clearPlotCache(plotRelative);
+        }
     }
 
     public class PlotSquaredRegion implements Region {
