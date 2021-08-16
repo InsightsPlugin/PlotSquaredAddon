@@ -2,7 +2,6 @@ package dev.frankheijden.insights.addons.plotsquared;
 
 import com.google.common.eventbus.Subscribe;
 import com.plotsquared.core.PlotAPI;
-import com.plotsquared.core.events.PlayerAutoPlotEvent;
 import com.plotsquared.core.events.PlayerClaimPlotEvent;
 import com.plotsquared.core.events.PlotAutoMergeEvent;
 import com.plotsquared.core.events.PlotClearEvent;
@@ -97,11 +96,6 @@ public class PlotSquaredAddon implements InsightsAddon {
     private void clearPlotCache(Plot plot) {
         var key = getId(plot.getConnectedPlots());
         InsightsPlugin.getInstance().getAddonStorage().remove(key);
-    }
-
-    @Subscribe
-    public void onAutoPlot(PlayerAutoPlotEvent event) {
-        clearPlotCache(event.getPlot());
     }
 
     @Subscribe
