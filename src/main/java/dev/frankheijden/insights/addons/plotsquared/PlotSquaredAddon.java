@@ -50,8 +50,8 @@ public class PlotSquaredAddon implements InsightsAddon {
         BlockVector3 max = region.getMaximumPoint();
         return new Cuboid(
                 world,
-                new Vector3(min.getX(), min.getY(), min.getZ()),
-                new Vector3(max.getX(), max.getY(), max.getZ())
+                new Vector3(min.getX(), world.getMinHeight(), min.getZ()),
+                new Vector3(max.getX(), world.getMaxHeight() - 1, max.getZ())
         );
     }
     
